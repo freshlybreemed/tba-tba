@@ -1,0 +1,61 @@
+{
+  "scope": "tba-project",
+  "builds": [
+    {
+      "src": "serverless/handlers/get.js",
+      "use": "@now/node"
+    },
+    {
+      "src": "serverless/handlers/post.js",
+      "use": "@now/node"
+    },
+    {
+      "src": "package.json",
+      "use": "@now/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "methods": ["POST"],
+      "dest": "serverless/handlers/post.js"
+    },
+    {
+      "src": "/api/connect",
+      "methods": ["POST"],
+      "dest": "serverless/helpers/user.js"
+    },
+    {
+      "src": "/api/charge/(.*)",
+      "methods": ["GET"],
+      "dest": "serverless/handlers/get.js?id=$1"
+    },
+    {
+      "src": "/api/event/(.*)",
+      "methods": ["GET"],
+      "dest": "serverless/handlers/get.js?slug=$1"
+    },
+    {
+      "src": "/api/events/(.*)",
+      "methods": ["GET"],
+      "dest": "serverless/handlers/get.js?sub=$1"
+    },
+    {
+      "src": "/api/user/(.*)",
+      "methods": ["GET"],
+      "dest": "serverless/handlers/get.js?sub=$1"
+    },
+    {
+      "src": "/api/balance/(.*)",
+      "methods": ["GET"],
+      "dest": "serverless/handlers/get.js?id=$1"
+    }
+  ],
+  "env": {
+    "GUEST_PASS_KEY": "564db0117b8a65ddd60271eaf3298aa4",
+    "MONGO_URL": "@mongo-url",
+    "STRIPE_SECRET_DEV": "@stripe-secret-dev",
+    "STRIPE_CLIENT_DEV": "@stripe-client-dev",
+    "STRIPE_SECRET_PROD": "@stripe-secret-prod"
+  }
+}

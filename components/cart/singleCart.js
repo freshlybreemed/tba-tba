@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import InputNumber from '../uielements/InputNumber';
+import InputNumber from '../uielements/inputNumber';
 import { notification } from '../index';
 
 export default class extends Component {
@@ -21,7 +21,7 @@ export default class extends Component {
       name,
       description,
       objectID,
-      cancelQuantity
+      cancelQuantity,
     } = this.props;
     const totalPrice = (price * quantity).toFixed(2);
     return (

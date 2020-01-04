@@ -8,7 +8,7 @@ import AntdSelectBox from '../Select';
 import AntdMention from '../Mention';
 import AntdRater from '../Rating';
 import AntdSlider from '../Slider';
-import AntdInputNumber from '../InputNumber';
+import AntdInputNumber from '../inputNumber';
 import Button from '../../../components/uielements/button';
 import Steps from '../../../components/uielements/steps';
 import message from '../../../components/uielements/message';
@@ -41,7 +41,7 @@ const steps = [
           <AntdCheckbox className="isomorphicCheckbox" />
         </div>
       </div>
-    )
+    ),
   },
   {
     title: 'Second',
@@ -52,7 +52,7 @@ const steps = [
         <AntdSelectBox />
         <AntdMention />
       </div>
-    )
+    ),
   },
   {
     title: 'Last',
@@ -62,15 +62,15 @@ const steps = [
         <AntdSlider />
         <AntdInputNumber />
       </div>
-    )
-  }
+    ),
+  },
 ];
 
 export default class extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: 0
+      current: 0,
     };
   }
   next() {
@@ -88,7 +88,9 @@ export default class extends Component {
         <PageHeader>Stepper Form</PageHeader>
         <ContentHolder>
           <Steps current={current}>
-            {steps.map(item => <Step key={item.title} title={item.title} />)}
+            {steps.map(item => (
+              <Step key={item.title} title={item.title} />
+            ))}
           </Steps>
 
           <div s="steps-content">{steps[this.state.current].content}</div>

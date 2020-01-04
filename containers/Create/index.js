@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
+import Link from 'next/link';
 import Button from '../../components/uielements/button';
 import Input from '../../components/uielements/input';
 import Form from '../../components/uielements/form';
@@ -9,9 +10,10 @@ import Tooltip from '../../components/uielements/tooltip';
 import Checkbox from '../../components/uielements/checkbox';
 import DatePicker from '../../components/uielements/datePicker';
 import TimePicker from '../../components/uielements/timePicker';
-import { createForm, createFormField, formShape } from 'rc-form';
+import { createForm, createFormField } from 'rc-form';
 import PlacesAutocomplete from 'react-places-autocomplete';
-
+import TicketCreation from '../../components/create/ticketCreation';
+import Upload from '../../components/create/upload';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import actions from '../../redux/create/actions';
@@ -21,7 +23,6 @@ const FormItem = Form.Item;
 const { saveField } = actions;
 class Create extends Component {
   static propTypes = {
-    form: formShape,
     name: PropTypes.object,
     dispatch: PropTypes.func,
   };
@@ -129,33 +130,22 @@ class Create extends Component {
         var obj = { ...this.state.event };
         obj.location.address = location;
         location.name = name;
-        // this.props.dispatch({
-        //   type: 'save_fields',
-        //   payload: {
-        //     createdEventForm: {
-        //       location,
-        //     },
-        //   },
-        // });
+        this.props.saveField({ location });
+
         this.setState({ event: obj }, () => console.log(this.state));
       });
     });
   };
 
   handleLocationChange = address => {
+    console.log('proppy', this.props);
     var event = { ...this.state.event };
     event.location.name = address;
-    this.setState({ event }, () => console.log(this.state));
-    var location = { ...this.props.formState.location };
+    this.setState({ event }, () => console.log('state', this.state));
+    var location = { ...this.props.createdEventForm.location };
     location.name = address;
-    this.props.dispatch({
-      type: 'save_fields',
-      payload: {
-        createdEventForm: {
-          location,
-        },
-      },
-    });
+    console.log('locie', location);
+    this.props.saveField({ location });
   };
 
   handleSelect = async (address, placeId) => {
@@ -184,24 +174,21 @@ class Create extends Component {
   };
 
   handleChange = e => {
-    console.log(this.props);
-    this.props.dispatch({
-      type: 'save_fields',
-      payload: {
-        createdEventForm: {
-          description: {
-            dirty: false,
-            errors: undefined,
-            name: 'createdEventForm.description',
-            touched: true,
-            validating: false,
-            value: e,
-          },
-        },
+    this.props.saveField({
+      description: {
+        dirty: false,
+        errors: undefined,
+        name: 'description',
+        touched: true,
+        validating: false,
+        value: e,
       },
     });
   };
 
+  saveImage = url => {
+    this.props.saveField({ image: url });
+  };
   render() {
     const ReactQuill = this.quill;
     const {
@@ -211,7 +198,8 @@ class Create extends Component {
       getFieldError,
       setFieldsValue,
     } = this.props.form;
-    const { formState, createdEvent } = this.props;
+    const { createdEventForm, createdEvent } = this.props;
+    const { location, description } = createdEventForm;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -236,7 +224,7 @@ class Create extends Component {
     };
 
     const isBefore = (rule, value, callback) => {
-      if (value.isAfter(getFieldValue('createdEventForm.startTime'))) {
+      if (value.isAfter(getFieldValue('startTime'))) {
         console.log(true);
         callback();
       }
@@ -245,11 +233,9 @@ class Create extends Component {
     };
     const slugNameAvailable = async (rule, value, callback) => {
       var availabe = null;
-      await axios
-        .get(`/api/event/${getFieldValue('createdEventForm.slug')}`)
-        .then(res => {
-          availabe = res.data.length === 0;
-        });
+      await axios.get(`/api/event/${getFieldValue('slug')}`).then(res => {
+        availabe = res.data.length === 0;
+      });
       // console.log)
       if (availabe) {
         callback();
@@ -262,7 +248,7 @@ class Create extends Component {
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="Event Title">
           <Input
-            {...getFieldProps('createdEventForm.title', {
+            {...getFieldProps('title', {
               getValueFromEvent: e => {
                 return e.target.value;
               },
@@ -280,8 +266,8 @@ class Create extends Component {
           {this.state.ready ? (
             <PlacesAutocomplete
               value={
-                typeof formState.location !== 'undefined'
-                  ? formState.location.name
+                typeof createdEventForm.location !== 'undefined'
+                  ? createdEventForm.location.name
                   : ''
               }
               onChange={this.handleLocationChange}
@@ -345,7 +331,7 @@ class Create extends Component {
               //   disabled={
               //     createdEvent.eventStatus === 'live' && createdEvent.tickets
               //   }
-              {...getFieldProps('createdEventForm.startDate', {
+              {...getFieldProps('startDate', {
                 rules: [
                   {
                     required: true,
@@ -371,16 +357,16 @@ class Create extends Component {
               //   disabled={
               //     createdEvent.eventStatus === 'live' && createdEvent.tickets
               //   }
-              {...getFieldProps('createdEventForm.startTime', {
+              {...getFieldProps('startTime', {
                 getValueFromEvent: e => {
-                  const momento = getFieldValue('createdEventForm.startDate');
+                  const momento = getFieldValue('startDate');
                   if (moment.isMoment(momento)) {
                     e.set('year', momento.year());
                     e.set('month', momento.month());
                     e.set('date', momento.date());
                     console.log(e);
                   }
-                  setFieldsValue({ 'createdEventForm.startDate': e });
+                  setFieldsValue({ startDate: e });
                   return e;
                 },
                 rules: [
@@ -410,7 +396,7 @@ class Create extends Component {
               //   disabled={
               //     createdEvent.eventStatus === 'live' && createdEvent.tickets
               //   }
-              {...getFieldProps('createdEventForm.endDate', {
+              {...getFieldProps('endDate', {
                 rules: [
                   {
                     required: true,
@@ -419,16 +405,11 @@ class Create extends Component {
                 ],
               })}
               disabledDate={current => {
-                if (!getFieldValue('createdEventForm.startDate')) return '';
-                console.log(
-                  'startdate',
-                  getFieldValue('createdEventForm.startDate'),
-                );
+                if (!getFieldValue('startDate')) return '';
+                console.log('startdate', getFieldValue('startDate'));
                 console.log('current', current);
                 return (
-                  current &&
-                  current.valueOf() <
-                    getFieldValue('createdEventForm.startDate')
+                  current && current.valueOf() < getFieldValue('startDate')
                 );
               }}
             />
@@ -443,11 +424,9 @@ class Create extends Component {
             -
           </span>
           <FormItem
-            validateStatus={
-              getFieldError('createdEventForm.endTime') ? 'error' : ''
-            }
+            validateStatus={getFieldError('endTime') ? 'error' : ''}
             help={
-              getFieldError('createdEventForm.endTime')
+              getFieldError('endTime')
                 ? 'End time must be after start time!'
                 : ''
             }
@@ -457,21 +436,18 @@ class Create extends Component {
               //   disabled={
               //     createdEvent.eventStatus === 'live' && createdEvent.tickets
               //   }
-              {...getFieldProps('createdEventForm.endTime', {
+              {...getFieldProps('endTime', {
                 initialValue: '',
                 getValueFromEvent: e => {
-                  const momento = getFieldValue('createdEventForm.endDate');
+                  const momento = getFieldValue('endDate');
                   console.log(e);
-                  console.log(
-                    'error?',
-                    getFieldError('createdEventForm.endTime'),
-                  );
+                  console.log('error?', getFieldError('endTime'));
                   if (moment.isMoment(momento)) {
                     e.set('year', momento.year());
                     e.set('month', momento.month());
                     e.set('date', momento.date());
                   }
-                  setFieldsValue({ 'createdEventForm.endDate': e });
+                  setFieldsValue({ endDate: e });
                   return e;
                 },
                 rules: [
@@ -493,11 +469,11 @@ class Create extends Component {
         </FormItem>
         {ReactQuill ? (
           <FormItem {...formItemLayout} label="Event Description">
-            {/* <ReactQuill
-              value={this.props.formState.description.value}
-              name="createdEventForm.description"
+            <ReactQuill
+              value={description.value}
+              name="description"
               onChange={this.handleChange}
-            /> */}
+            />
           </FormItem>
         ) : (
           ''
@@ -513,7 +489,7 @@ class Create extends Component {
             </span>
           }
         >
-          {getFieldDecorator('createdEventForm.organizer', {
+          {getFieldDecorator('organizer', {
             rules: [
               {
                 required: true,
@@ -535,10 +511,10 @@ class Create extends Component {
             </span>
           }
         >
-          {/* <TicketCreation /> */}
+          <TicketCreation />
         </FormItem>
         <FormItem {...formItemLayout} label="Refundable?">
-          {getFieldDecorator('createdEventForm.refundable', {
+          {getFieldDecorator('refundable', {
             getValueFromEvent: e => {
               if (e) return true;
               return false;
@@ -546,7 +522,7 @@ class Create extends Component {
           })(<Switch />)}
         </FormItem>
         <FormItem {...formItemLayout} label="Publish?">
-          {getFieldDecorator('createdEventForm.eventStatus', {
+          {getFieldDecorator('eventStatus', {
             getValueFromEvent: e => {
               if (e) return 'live';
               return 'draft';
@@ -556,43 +532,44 @@ class Create extends Component {
         <FormItem
           {...formItemLayout}
           label="Event URL"
-          validateStatus={getFieldError('createdEventForm.slug') ? 'error' : ''}
+          validateStatus={getFieldError('slug') ? 'error' : ''}
           help={
-            getFieldError('createdEventForm.slug')
+            getFieldError('slug')
               ? 'That name is unavailable. Please try another one.'
               : ''
           }
-        ></FormItem>{' '}
-        {/*{getFieldDecorator('createdEventForm.slug', {
+        >
+          {getFieldDecorator('slug', {
             rules: [
               { required: true, message: 'Please input slug!' },
               {
                 validator: slugNameAvailable,
               },
             ],
-          })( 
-          <>
-            <div style={{ marginBottom: 16 }}>
-          <Input
-            style={{ marginBottom: 16 }}
-            addonBefore={`${host.split('/')[2]}/e/`}
-            addonAfter=".com"
-          />,
-            </div>
-          </>)
-          }
-        </FormItem> */}
+          })(
+            <>
+              <div style={{ marginBottom: 16 }}>
+                <Input
+                  style={{ marginBottom: 16 }}
+                  addonBefore={`whatstba.com/e/`}
+                  addonAfter=".com"
+                />
+                ,
+              </div>
+            </>,
+          )}
+        </FormItem>
         <FormItem {...formItemLayout} label="Upload Event Image">
-          {/* <Upload
-            {...getFieldProps('createdEventForm.image', {
+          <Upload
+            {...getFieldProps('image', {
               rules: [{ required: true, message: 'Upload event image!' }],
             })}
-            image={createdEvent.image}
+            image={createdEventForm.image}
             saveImage={this.saveImage}
-          /> */}
+          />
         </FormItem>
         <FormItem {...tailFormItemLayout}>
-          {getFieldDecorator('createdEventForm.agreement', {
+          {getFieldDecorator('agreement', {
             valuePropName: 'checked',
           })(
             <Checkbox>
@@ -614,54 +591,31 @@ class Create extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('mapstate', state.Create.get('title'));
   return {
-    // createdEvent: state.createdEvent,
-    formState: {
-      //   title: state.createdEventForm.title,
-      //   startDate: state.createdEventForm.startDate,
-      //   endDate: state.createdEventForm.endDate,
-      //   startTime: state.createdEventForm.startTime,
-      //   location: state.createdEventForm.location,
-      //   endTime: state.createdEventForm.endTime,
-      //   refundable: state.createdEventForm.refundable,
-      //   organizer: state.createdEventForm.organizer,
-      //   description: state.createdEventForm.description,
-      //   eventStatus: state.createdEventForm.eventStatus,
-      //   slug: state.createdEventForm.slug,
-    },
+    ...state.Create.toJS(),
   };
 };
 
-export default connect(mapStateToProps)(
+export default connect(mapStateToProps, { saveField })(
   createForm({
     onFieldsChange(props, changedFields) {
       // console.log(props.form.getFieldsValue());
-      console.log('props', props);
-      console.log('changedFields', changedFields);
-      props.dispatch({
-        type: 'save_fields',
-        payload: changedFields,
-      });
+      console.log(changedFields);
+      props.saveField(changedFields);
     },
     mapPropsToFields(props) {
       return {
-        // createdEventForm: {
-        //   title: createFormField(props.formState.title),
-        //   startDate: createFormField(props.formState.startDate),
-        //   startTime: createFormField(props.formState.startTime),
-        //   endDate: createFormField(props.formState.endDate),
-        //   location: createFormField(props.formState.location),
-        //   refundable: createFormField(props.formState.refundable),
-        //   endTime: createFormField(props.formState.endTime),
-        //   organizer: createFormField(props.formState.organizer),
-        //   description: createFormField(props.formState.description),
-        //   slug: createFormField(props.formState.slug),
-        // },
+        title: createFormField(props.createdEventForm.title),
+        startDate: createFormField(props.createdEventForm.startDate),
+        startTime: createFormField(props.createdEventForm.startTime),
+        endDate: createFormField(props.createdEventForm.endDate),
+        location: createFormField(props.createdEventForm.location),
+        refundable: createFormField(props.createdEventForm.refundable),
+        endTime: createFormField(props.createdEventForm.endTime),
+        organizer: createFormField(props.createdEventForm.organizer),
+        description: createFormField(props.createdEventForm.description),
+        slug: createFormField(props.createdEventForm.slug),
       };
-    },
-    onValuesChange(_, values) {
-      console.log(values);
     },
   })(Create),
 );

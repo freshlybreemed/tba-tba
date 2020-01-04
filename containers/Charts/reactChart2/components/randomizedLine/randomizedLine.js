@@ -3,10 +3,8 @@ import { Line } from 'react-chartjs-2';
 import { initialData } from './randomizedConfig';
 
 class Graph extends Component {
-  componentWillMount() {
-    this.setState(initialData);
-  }
   componentDidMount() {
+    this.setState(initialData);
     const _this = this;
     setInterval(() => {
       const { datasets } = _this.state;

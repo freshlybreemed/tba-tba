@@ -7,10 +7,10 @@ import actions from './actions';
 const fakeApiCall = true;
 export function* loginRequest() {
   yield takeEvery(actions.LOGIN_REQUEST, function*({ payload }) {
-    if (fakeApiCall) {
+    if (payload) {
       yield put({
         type: actions.LOGIN_SUCCESS,
-        token: 'secret token',
+        token: payload,
         profile: 'Profile',
       });
     } else {

@@ -65,7 +65,7 @@ class SignIn extends Component {
             confirmLoading: false,
           });
           const { login, history } = this.props;
-          login(history);
+          login({ ...result });
         }
       });
   };

@@ -7,9 +7,12 @@ import contactSagas from './contacts/saga';
 import youtubeSearchSagas from './youtubeSearch/sagas';
 import githubSearchSagas from './githubSearch/sagas';
 import ecommerceSaga from './ecommerce/saga';
+import createSaga from './create/saga';
+import eventSaga from './events/saga';
 
 export default function* rootSaga(getState) {
   yield all([
+    createSaga(),
     authSagas(),
     noteSagas(),
     mailSagas(),
@@ -18,5 +21,6 @@ export default function* rootSaga(getState) {
     youtubeSearchSagas(),
     githubSearchSagas(),
     ecommerceSaga(),
+    eventSaga(),
   ]);
 }

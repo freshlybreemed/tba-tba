@@ -15,6 +15,9 @@ export default function createReducer(state = initState, action) {
       return state
         .set('accountSettingsForm', action.accountSettingsForm)
         .set('accountSettings', action.accountSettings);
+    case actions.SAVE_SETTINGS_SUCCESS:
+      console.log('save dispatch', action);
+      return state;
     default:
       return state;
   }

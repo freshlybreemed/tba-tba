@@ -21,9 +21,9 @@
       "dest": "serverless/handlers/post.js"
     },
     {
-      "src": "/api/connect",
+      "src": "/api/user",
       "methods": ["POST"],
-      "dest": "serverless/helpers/user.js"
+      "dest": "serverless/helpers/post.js"
     },
     {
       "src": "/api/charge/(.*)",

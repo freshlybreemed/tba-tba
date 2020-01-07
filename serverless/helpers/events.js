@@ -120,7 +120,6 @@ const create = wrapAsync(async function(req, db) {
 const eventsByOrganizer = wrapAsync(async function(req, db) {
   const { query } = parse(req.url, true);
   const sub = query.sub;
-  console.log('sub', sub);
   return db
     .collection('tba')
     .find({ organizerId: sub })

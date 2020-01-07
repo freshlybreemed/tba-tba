@@ -145,8 +145,18 @@ class Sidebar extends Component {
                   </span>
                 </Link>
               </Menu.Item>
+              <Menu.Item key="settings">
+                <Link href={`/settings`}>
+                  <span className="isoMenuHolder" style={submenuColor}>
+                    <i className="ion-android-person-add" />
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.settings" />
+                    </span>
+                  </span>
+                </Link>
+              </Menu.Item>
               <Menu.Item key="myEvents">
-                <Link href={`/create`}>
+                <Link href={`/myevents`}>
                   <span className="isoMenuHolder" style={submenuColor}>
                     <i className="ion-android-person-add" />
                     <span className="nav-text">

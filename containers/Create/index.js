@@ -13,7 +13,7 @@ import TimePicker from '../../components/uielements/timePicker';
 import { createForm, createFormField } from 'rc-form';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import TicketCreation from '../../components/create/ticketCreation';
-import Upload from '../../components/create/upload';
+import Upload from '../../components/uielements/upload';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import actions from '../../redux/create/actions';

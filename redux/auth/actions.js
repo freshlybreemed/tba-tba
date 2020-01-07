@@ -6,7 +6,7 @@ const actions = {
   LOGIN_ERROR: 'LOGIN_ERROR',
   login: userInfo => ({
     type: actions.LOGIN_REQUEST,
-    payload: { ...userInfo },
+    payload: { firebase: userInfo.V.currentUser },
   }),
   jwtLogin: (history, userInfo) => ({
     type: actions.JWT_LOGIN_REQUEST,

@@ -1,22 +1,36 @@
-import { all, takeEvery, put, call, fork } from 'redux-saga/effects';
+import {
+  all,
+  takeEvery,
+  takeLatest,
+  put,
+  call,
+  fork,
+} from 'redux-saga/effects';
 import { setCookie, removeCookie } from '../../helpers/session';
 import { notification } from '../../components';
 import JwtAuthentication from '../../helpers/jwtAuthentication';
 import actions from './actions';
+import axios from 'axios';
 
-const fakeApiCall = true;
-export function* loginRequest() {
-  yield takeEvery(actions.LOGIN_REQUEST, function*({ payload }) {
-    if (payload) {
-      yield put({
-        type: actions.LOGIN_SUCCESS,
-        token: payload,
-        profile: 'Profile',
-      });
-    } else {
-      yield put({ type: actions.LOGIN_ERROR });
-    }
-  });
+const fetchUserApi = `/api/user`;
+
+const onUserReqeust = async user =>
+  await fetch(`${fetchUserApi}`, {
+    method: 'post',
+    body: JSON.stringify(user),
+  }).then(res => res.json());
+export function* loginRequest({ payload }) {
+  try {
+    const userResult = yield call(onUserReqeust, payload);
+    console.log('result', userResult);
+    yield put({
+      type: actions.LOGIN_SUCCESS,
+      token: userResult,
+      profile: 'Profile',
+    });
+  } catch (error) {
+    yield put({ type: actions.LOGIN_ERROR });
+  }
 }
 
 export function* jwtLoginRequest() {
@@ -36,11 +50,10 @@ export function* jwtLoginRequest() {
   });
 }
 
-export function* loginSuccess() {
-  yield takeEvery(actions.LOGIN_SUCCESS, function*(payload) {
-    setCookie('login_saga', payload.token);
-    yield setCookie('id_token', payload.token);
-  });
+export function* loginSuccess(payload) {
+  console.log('paypay', payload);
+  setCookie('login_saga', payload.token.uid);
+  yield setCookie('id_token', payload.token.uid);
 }
 
 export function* loginError() {
@@ -54,9 +67,10 @@ export function* logout() {
 }
 export default function* rootSaga() {
   yield all([
-    fork(loginRequest),
+    takeLatest(actions.LOGIN_REQUEST, loginRequest),
+    // fork(loginRequest),
     fork(jwtLoginRequest),
-    fork(loginSuccess),
+    takeEvery(actions.LOGIN_SUCCESS, loginSuccess),
     fork(loginError),
     fork(logout),
   ]);

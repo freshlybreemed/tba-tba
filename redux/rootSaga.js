@@ -9,6 +9,7 @@ import githubSearchSagas from './githubSearch/sagas';
 import ecommerceSaga from './ecommerce/saga';
 import createSaga from './create/saga';
 import eventSaga from './events/saga';
+import settingsSaga from './settings/saga';
 
 export default function* rootSaga(getState) {
   yield all([
@@ -22,5 +23,6 @@ export default function* rootSaga(getState) {
     githubSearchSagas(),
     ecommerceSaga(),
     eventSaga(),
+    settingsSaga(),
   ]);
 }

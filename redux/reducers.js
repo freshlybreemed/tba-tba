@@ -13,6 +13,8 @@ import ThemeSwitcher from './themeSwitcher/reducer';
 import LanguageSwitcher from './languageSwitcher/reducer';
 import YoutubeSearch from './youtubeSearch/reducers';
 import githubSearch from './githubSearch/reducers';
+import Events from './events/reducer';
+import Settings from './settings/reducer';
 // import DevReducers from '../customApp/redux/reducers';
 
 export default combineReducers({
@@ -27,8 +29,10 @@ export default combineReducers({
   Cards,
   Ecommerce,
   Notes,
+  Settings,
   Todos,
   Contacts,
   Create,
+  Events,
   // ...DevReducers
 });

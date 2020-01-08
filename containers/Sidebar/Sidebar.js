@@ -611,15 +611,6 @@ class Sidebar extends Component {
                     </span>
                   </Link>
                 </Menu.Item>
-                <Menu.Item style={submenuStyle} key="codeMirror">
-                  <Link href={`${url}/codeMirror`}>
-                    <span className="isoMenuHolder" style={submenuColor}>
-                      <span className="nav-text">
-                        <IntlMessages id="sidebar.codeMirror" />
-                      </span>
-                    </span>
-                  </Link>
-                </Menu.Item>
                 <Menu.Item style={submenuStyle} key="uppy">
                   <Link href={`${url}/uppy`}>
                     <span className="isoMenuHolder" style={submenuColor}>

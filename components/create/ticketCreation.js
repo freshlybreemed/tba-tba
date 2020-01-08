@@ -8,7 +8,7 @@ import Icon from '../../components/uielements/icon';
 import Modal from '../../components/uielements/modal';
 import InputNumber from '../uielements/inputNumber';
 import Checkbox from '../uielements/checkbox';
-import ConfigProvider from 'antd';
+import ConfigProvider from '../uielements/configProvider';
 
 import { connect } from 'react-redux';
 import { createForm, createFormField } from 'rc-form';
@@ -149,7 +149,6 @@ class TicketCreation extends React.Component {
     this.props.ticketDeletion(tix);
   };
   saveFormRef = formRef => {
-    console.log('saving', formRef);
     this.formRef = formRef;
   };
 
@@ -163,30 +162,30 @@ class TicketCreation extends React.Component {
 
     return (
       <div>
-        {/* <ConfigProvider renderEmpty={customizeRenderEmpty}> */}
-        <List
-          itemLayout="horizontal"
-          dataSource={this.props.tixArray}
-          renderItem={item => (
-            <List.Item
-              actions={[
-                <a onClick={() => this.removeTicket(item.name)}>delete</a>,
-                <a onClick={() => this.editTicket(item)}>edit</a>,
-              ]}
-            >
-              <List.Item.Meta
-                avatar={<Avatar icon="tag" />}
-                title={item.name}
-                description={item.description}
-              />
-              <List.Item.Meta
-                title={`Quantity: ${item.currentQuantity}/${item.startingQuantity}`}
-              />
-              <div>{item.price === 0 ? 'Free' : `$${item.price}`}</div>
-            </List.Item>
-          )}
-        />
-        {/* </ConfigProvider> */}
+        <ConfigProvider renderEmpty={customizeRenderEmpty}>
+          <List
+            itemLayout="horizontal"
+            dataSource={this.props.tixArray}
+            renderItem={item => (
+              <List.Item
+                actions={[
+                  <a onClick={() => this.removeTicket(item.name)}>delete</a>,
+                  <a onClick={() => this.editTicket(item)}>edit</a>,
+                ]}
+              >
+                <List.Item.Meta
+                  avatar={<Avatar icon="tag" />}
+                  title={item.name}
+                  description={item.description}
+                />
+                <List.Item.Meta
+                  title={`Quantity: ${item.currentQuantity}/${item.startingQuantity}`}
+                />
+                <div>{item.price === 0 ? 'Free' : `$${item.price}`}</div>
+              </List.Item>
+            )}
+          />
+        </ConfigProvider>
         <br />
         <Button type="primary" onClick={this.showModal}>
           Add Ticket
@@ -227,7 +226,6 @@ TicketCreateForm = connect(state => {
 
 TicketCreation = connect(
   state => {
-    console.log('state', state);
     let tickets = { ...state.Create.toJS().createdEventForm.ticketTypes };
     const tixArray = [];
     for (var tix in tickets) {

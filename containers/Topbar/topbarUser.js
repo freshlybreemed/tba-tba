@@ -13,7 +13,7 @@ class TopbarUser extends Component {
     this.handleVisibleChange = this.handleVisibleChange.bind(this);
     this.hide = this.hide.bind(this);
     this.state = {
-      visible: false
+      visible: false,
     };
   }
   hide() {
@@ -24,6 +24,8 @@ class TopbarUser extends Component {
   }
 
   render() {
+    const { userPic } = this.props;
+    console.log('userpic is ', userPic);
     const content = (
       <TopbarDropdownWrapper className="isoUserDropdown">
         <a className="isoDropdownLink">Settings</a>
@@ -45,11 +47,17 @@ class TopbarUser extends Component {
         placement="bottomLeft"
       >
         <div className="isoImgWrapper">
-          <img alt="user" src={userpic} />
+          <img alt="user" src={userPic ? userPic : userpic} />
           <span className="userActivity online" />
         </div>
       </Popover>
     );
   }
 }
-export default connect(null, { logout })(TopbarUser);
+
+const mapStateToProps = state => {
+  return {
+    // userPic: state.Auth.toJS().idToken.accountSettings.image,
+  };
+};
+export default connect(mapStateToProps, { logout })(TopbarUser);

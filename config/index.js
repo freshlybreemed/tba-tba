@@ -1,5 +1,5 @@
 export default {
-  apiUrl: 'http://yoursite.com/api/',
+  apiUrl: 'http://whatstba.com/api/',
   google: {
     analyticsKey: 'UA-xxxxxxxxx-1',
   },

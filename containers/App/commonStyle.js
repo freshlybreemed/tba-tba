@@ -9,7 +9,13 @@ const AppHolder = styled.div`
     cursor: pointer;
     transition: color 0.3s;
   }
-
+  .isomorphicContent {
+    width: 100%;
+    height: 100%;
+    min-height: auto;
+    max-height: 100vh;
+    max-height: -webkit-fill-available;
+  }
   .trigger:hover {
     color: ${palette('primary', 0)};
   }
@@ -28,6 +34,7 @@ const AppHolder = styled.div`
     &.isoContentMainLayout {
       overflow: auto;
       overflow-x: hidden;
+      max-height: -webkit-fill-available;
       @media only screen and (min-width: 768px) and (max-width: 1220px) {
         width: calc(100% - 64px);
         flex-shrink: 0;
@@ -46,11 +53,13 @@ const AppHolder = styled.div`
     background-color: #ffffff;
     border: 1px solid ${palette('border', 0)};
     height: 100%;
+    max-height: -webkit-fill-available;
   }
 
   .isomorphicLayout {
     width: calc(100% - 240px);
     flex-shrink: 0;
+    width: 500%;
     overflow-x: hidden !important;
 
     @media only screen and (max-width: 767px) {

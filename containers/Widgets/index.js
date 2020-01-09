@@ -33,20 +33,19 @@ export default class IsoWidgets extends Component {
       flexFlow: 'row wrap',
       alignItems: 'flex-start',
       padding: '15px',
-      overflow: 'hidden'
+      overflow: 'hidden',
     };
 
     const chartEvents = [
       {
         eventName: 'select',
-        callback(Chart) {
-        }
-      }
+        callback(Chart) {},
+      },
     ];
-    
+
     const stackConfig = {
       ...rechartConfigs.StackedAreaChart,
-      width: window.innerWidth < 450 ? 300 : 500
+      width: window.innerWidth < 450 ? 300 : 500,
     };
     return (
       <div style={wisgetPageStyle}>
@@ -102,10 +101,12 @@ export default class IsoWidgets extends Component {
             <IsoWidgetsWrapper>
               <IsoWidgetBox>
                 {/* TABLE */}
-                {<TableViews.SimpleView
-                  tableInfo={tableinfos[0]}
-                  dataList={tableDataList}
-                />}
+                {
+                  <TableViews.SimpleView
+                    tableInfo={tableinfos[0]}
+                    dataList={tableDataList}
+                  />
+                }
               </IsoWidgetBox>
             </IsoWidgetsWrapper>
           </Col>
@@ -302,10 +303,12 @@ export default class IsoWidgets extends Component {
           <Col md={12} sm={24} xs={24} style={colStyle}>
             <IsoWidgetsWrapper>
               <IsoWidgetBox height={470}>
-                {<GoogleChart
-                  {...googleChartConfigs.BarChart}
-                  chartEvents={chartEvents}
-                />}
+                {
+                  <GoogleChart
+                    {...googleChartConfigs.BarChart}
+                    chartEvents={chartEvents}
+                  />
+                }
               </IsoWidgetBox>
             </IsoWidgetsWrapper>
           </Col>
@@ -333,7 +336,7 @@ export default class IsoWidgets extends Component {
             <IsoWidgetsWrapper>
               <IsoWidgetBox height={450}>
                 {/* Google Bar Chart */}
-                {<GoogleChart {...googleChartConfigs.ComboChart} /> }
+                {<GoogleChart {...googleChartConfigs.ComboChart} />}
               </IsoWidgetBox>
             </IsoWidgetsWrapper>
           </Col>

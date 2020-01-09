@@ -50,9 +50,9 @@ const nextConfig = {
 module.exports = withPlugins(
   [
     [withTM],
-    withOptimizedImages,
     withFonts,
     withSass,
+    withOptimizedImages,
     withCSS,
     [
       withBundleAnalyzer,

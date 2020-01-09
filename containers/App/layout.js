@@ -31,8 +31,9 @@ class Header extends Component {
               onResize={windowSize =>
                 this.props.toggleAll(
                   windowSize.windowWidth,
-                  windowSize.windowHeight
-                )}
+                  windowSize.windowHeight,
+                )
+              }
             />
           </Debounce>
         </div>
@@ -53,8 +54,9 @@ class Header extends Component {
                       onResize={windowSize =>
                         this.props.toggleAll(
                           windowSize.windowWidth,
-                          windowSize.windowHeight
-                        )}
+                          windowSize.windowHeight,
+                        )
+                      }
                     />
                   </Debounce>
                   <Topbar />
@@ -63,7 +65,7 @@ class Header extends Component {
                     <Layout
                       className="isoContentMainLayout"
                       style={{
-                        height: '100vh'
+                        height: '100vh',
                       }}
                     >
                       <Content
@@ -72,7 +74,7 @@ class Header extends Component {
                           padding: '70px 0 0',
                           flexShrink: '0',
                           background: '#f1f3f6',
-                          width: '100%'
+                          // width: '50%',
                         }}
                       >
                         {this.props.children}
@@ -81,7 +83,7 @@ class Header extends Component {
                         style={{
                           background: '#ffffff',
                           textAlign: 'center',
-                          borderTop: '1px solid #ededed'
+                          borderTop: '1px solid #ededed',
                         }}
                       >
                         {siteConfig.footerText}
@@ -102,7 +104,7 @@ const mapStateToProps = state => {
   return {
     App: state.App.toJS(),
     locale: state.LanguageSwitcher.toJS().language.locale,
-    selectedTheme: state.ThemeSwitcher.toJS().changeThemes.themeName
+    selectedTheme: state.ThemeSwitcher.toJS().changeThemes.themeName,
   };
 };
 export default connect(mapStateToProps, { toggleAll })(Header);

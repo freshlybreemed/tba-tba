@@ -16,7 +16,7 @@
     "cookie-parser": "^1.4.3",
     "coolors-to-hex": "^1.0.3",
     "express": "^4.15.4",
-    "firebase": "^4.6.1",
+    "firebase": "^7.6.2",
     "frappe-charts": "^0.0.8",
     "google-maps-react": "^1.1.2",
     "immutable": "^3.8.2",
@@ -91,8 +91,7 @@
     "styled-theme": "^0.3.3",
     "styled-tools": "^0.1.4",
     "uppy": "^0.18.0",
-    "url-loader": "^3.0.0",
-    "uuid": "^3.1.0"
+    "url-loader": "^3.0.0"
   },
   "scripts": {
     "start": "node server.js -p $PORT",

@@ -5,7 +5,7 @@ import Input, {
   InputGroup,
   Textarea,
 } from '../../../components/uielements/input';
-import InputNumber from '../../../components/uielements/inputNumber';
+import Inputnumber from '../../../components/uielements/inputNumber';
 import Select, { SelectOption } from '../../../components/uielements/select';
 import DatePicker from '../../../components/uielements/datePicker';
 import AutoComplete from '../../../components/uielements/autocomplete';
@@ -133,7 +133,7 @@ export default class extends Component {
                     style={{ width: '33%' }}
                     defaultValue="input content"
                   />
-                  <InputNumber style={{ width: '33%' }} />
+                  <Inputnumber style={{ width: '33%' }} />
                 </InputGroup>
 
                 <InputGroup compact style={{ marginBottom: '15px' }}>

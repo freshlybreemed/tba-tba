@@ -61,6 +61,8 @@ import IsoWidgetsWrapper from '../Widgets/widgets-wrapper';
 import StickerWidget from '../Widgets/sticker/sticker-widget';
 import basicStyle from '../../config/basicStyle';
 import IntlMessages from '../../components/utility/intlMessages';
+import ContentHolder from '../../components/utility/contentHolder';
+import Box from '../../components/utility/box';
 
 import Link from 'next/link';
 import NoSSR from 'react-no-ssr';
@@ -431,7 +433,7 @@ class Manage extends Component {
           .split('.')[0],
       );
       return (
-        <Card.Grid hoverable={false} style={gridStyle} bordered={false}>
+        <>
           <Text strong>{ticketTypes[type].name}</Text>
           <br />
           <Progress type="circle" percent={percentage} width={80} />
@@ -440,7 +442,7 @@ class Manage extends Component {
             {`${ticketTypes[type].currentQuantity}/${ticketTypes[type].startingQuantity}`}{' '}
             available
           </Text>
-        </Card.Grid>
+        </>
       );
     });
   };
@@ -621,23 +623,32 @@ class Manage extends Component {
             </IsoWidgetsWrapper>
           </Col>
         </Row>
-
-        <Card title="Recent Orders">
-          <ConfigProvider renderEmpty={() => customizeRenderEmpty('Sales')}>
-            <Table
-              columns={isMobile ? ordersMobileColumns : ordersDesktopColumns}
-              {...{ pagination: false }}
-              dataSource={this.renderRecentOrders()}
-            />
-          </ConfigProvider>
-        </Card>
+        <Box
+          title={`Recent Orders`}
+          subtitle={<IntlMessages id="forms.input.basicSubTitle" />}
+        >
+          <ContentHolder>
+            <ConfigProvider renderEmpty={() => customizeRenderEmpty('Sales')}>
+              <Table
+                columns={isMobile ? ordersMobileColumns : ordersDesktopColumns}
+                {...{ pagination: false }}
+                dataSource={this.renderRecentOrders()}
+              />
+            </ConfigProvider>
+          </ContentHolder>
+        </Box>
         {/* <Card title="Payouts">
                   <ConfigProvider renderEmpty={() => customizeRenderEmpty('Payouts')}>
                     <Table size="small" {...{pagination: false}} dataSource={[]} columns={isMobile? ordersMobileColumns: payoutsDesktopColumns} />
                   </ConfigProvider>
   
                 </Card> */}
-        <Card title="Sales by Ticket Type">,{this.renderTicketTypes()}</Card>
+        <Box
+          title={`Sales by Ticket Type"`}
+          subtitle={<IntlMessages id="forms.input.basicSubTitle" />}
+        >
+          <ContentHolder>{this.renderTicketTypes()} </ContentHolder>
+        </Box>
         {/* <Card
           title="Sales analytics"
           extra={

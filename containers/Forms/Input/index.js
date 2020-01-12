@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Col, Row, Icon } from 'antd';
-import Input, {
+import { Col, Row, Icon, Input } from 'antd';
+import {
   InputSearch,
   InputGroup,
   Textarea,

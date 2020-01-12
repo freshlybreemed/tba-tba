@@ -14,14 +14,14 @@ const events = wrapAsync(async function(req, db) {
   const { query } = parse(req.url, true);
   const slug = query.slug;
   console.log('slug', slug);
-  return !ObjectId.isValid(slug)
+  return ObjectId.isValid(slug) && slug.length === 24
     ? db
         .collection('tba')
-        .find({ slug })
+        .find({ _id: ObjectId(slug) })
         .toArray()
     : db
         .collection('tba')
-        .find({ _id: ObjectId(slug) })
+        .find({ slug })
         .toArray();
 });
 const create = wrapAsync(async function(req, db) {

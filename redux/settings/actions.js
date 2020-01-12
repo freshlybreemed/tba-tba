@@ -14,17 +14,19 @@ const accountSettingsActions = {
   },
   editSettings: () => {
     return (dispatch, getState) => {
-      const accountSettings = getState().Auth.toJS().idToken.accountSettings;
-      var editedAccount = {};
-      for (var thing in accountSettings) {
-        editedAccount[thing] = {
-          value: accountSettings[thing],
-        };
+      if (getState().Auth.toJS().idToken) {
+        const accountSettings = getState().Auth.toJS().idToken.accountSettings;
+        var editedAccount = {};
+        for (var thing in accountSettings) {
+          editedAccount[thing] = {
+            value: accountSettings[thing],
+          };
+        }
+        return dispatch({
+          type: accountSettingsActions.EDIT_SETTINGS,
+          accountSettingsForm: editedAccount,
+        });
       }
-      return dispatch({
-        type: accountSettingsActions.EDIT_SETTINGS,
-        accountSettingsForm: editedAccount,
-      });
     };
   },
   updateSettings: field => {

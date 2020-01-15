@@ -1,8 +1,4 @@
 import { Upload, Icon, message } from 'antd';
-
-// import ImgCrop from "antd-img-crop";
-// import "antd/dist/antd.css";
-
 import axios from 'axios';
 
 class Avatar extends React.Component {
@@ -65,21 +61,21 @@ class Avatar extends React.Component {
     const uploadButton = (
       <div>
         <Icon type={this.state.loading ? 'loading' : 'plus'} />
-        <div className="ant-upload-text">Upload</div>
+        <div className='ant-upload-text'>Upload</div>
       </div>
     );
     const { image } = this.props;
     return (
       <Upload
-        name="avatar"
-        listType="picture-card"
-        className="avatar-uploader"
+        name='avatar'
+        listType='picture-card'
+        className='avatar-uploader'
         showUploadList={false}
         beforeUpload={this.beforeUpload}
         customRequest={this.handleChange}
       >
         {image ? (
-          <img src={image} style={{ height: '60%' }} alt="avatar" />
+          <img src={image} style={{ height: '60%' }} alt='avatar' />
         ) : (
           uploadButton
         )}

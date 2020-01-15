@@ -30,9 +30,9 @@ export default class MyDocument extends Document {
     return (
       <Helmet
         htmlAttributes={{ lang: 'en' }}
-        title="Isomorphic"
+        title='Isomorphic'
         meta={[
-          { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+          { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         ]}
       />
     );
@@ -48,16 +48,27 @@ export default class MyDocument extends Document {
           {this.helmetHeadComponents}
           <style>{`body { margin: 0 }`}</style>
           <link
-            rel="stylesheet"
-            href="//cdnjs.cloudflare.com/ajax/libs/antd/2.9.3/antd.min.css"
+            rel='stylesheet'
+            href='//cdnjs.cloudflare.com/ajax/libs/antd/3.25.3/antd.min.css'
           />
-          <link rel="stylesheet" href="/static/css/ionicons.min.css" />
-          <link rel="stylesheet" href="/static/css/global.css" />
-          <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet" async />          
-          <link rel="stylesheet" href="https://unpkg.com/react-instantsearch-theme-algolia@4.0.0/style.min.css" />          
-          <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
-           integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
-           crossOrigin="" async />          
+          <link rel='stylesheet' href='/static/css/ionicons.min.css' />
+          <link rel='stylesheet' href='/static/css/global.css' />
+          <link
+            href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700'
+            rel='stylesheet'
+            async
+          />
+          <link
+            rel='stylesheet'
+            href='https://unpkg.com/react-instantsearch-theme-algolia@4.0.0/style.min.css'
+          />
+          <link
+            rel='stylesheet'
+            href='https://unpkg.com/leaflet@1.2.0/dist/leaflet.css'
+            integrity='sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=='
+            crossOrigin=''
+            async
+          />
           {styleTags}
         </Head>
         <body {...this.helmetBodyAttrComponents}>

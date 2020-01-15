@@ -1,21 +1,12 @@
 import App from 'next/app';
 import axios from 'axios';
 import { Provider } from 'react-redux';
-import { withReduxSaga } from '../redux/store';
 import { setCookie, getCookie, removeCookie } from '../helpers/session';
+import { PersistGate } from 'redux-persist/integration/react';
 
 class MyApp extends App {
   // function MyApp({ Component, pageProps }) {
 
-  static getInitialProps = async appContext => {
-    const { ctx } = appContext;
-    // calls page's `getInitialProps` and fills `appProps.pageProps`
-    // console.log('req', ctx.req);
-
-    const appProps = await App.getInitialProps(appContext);
-
-    return { ...appProps, userId: getCookie('id_token', ctx.req) };
-  };
   componentDidMount() {
     const { userId } = this.props;
     if (userId) {

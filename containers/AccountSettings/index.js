@@ -3,6 +3,9 @@ import { Component } from 'react';
 import Upload from '../../components/uielements/upload';
 import { connect } from 'react-redux';
 import { createForm, createFormField } from 'rc-form';
+import ContentHolder from '../../components/utility/contentHolder';
+import Box from '../../components/utility/box';
+
 import axios from 'axios';
 import actions from '../../redux/settings/actions';
 const { updateSettings, updateSettingsSave, editSettings } = actions;
@@ -77,188 +80,184 @@ class AccountSettings extends Component {
     };
     return (
       <>
-        <Card
-          title="Contact Settings"
-          className="mb-4"
-          bodyStyle={{ padding: '1rem' }}
-        >
-          <Form onSubmit={this.handleSubmit}>
-            <FormItem {...formItemLayout} label="First Name">
-              {getFieldDecorator('firstName', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Please input your event name!',
-                    whitespace: true,
-                  },
-                ],
-              })(<Input />)}
-            </FormItem>
-            <FormItem {...formItemLayout} label="Last Name">
-              {getFieldDecorator('lastName', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Please input your event name!',
-                    whitespace: true,
-                  },
-                ],
-              })(<Input />)}
-            </FormItem>
-            <FormItem {...formItemLayout} label="Organizer Name">
-              {getFieldDecorator('organizerName', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Please input your event name!',
-                    whitespace: true,
-                  },
-                ],
-              })(<Input />)}
-            </FormItem>
-            <FormItem {...formItemLayout} label="Add a Profile Image">
-              <Upload
-                {...getFieldDecorator('image', {
-                  rules: [{ required: true, message: 'Upload event image!' }],
-                })}
-                image={accountSettingsForm.image}
-                saveImage={this.saveImage}
-              />{' '}
-            </FormItem>
-          </Form>
-        </Card>
+        <Box title={'Contact Settings'} subtitle={'yoo'}>
+          <ContentHolder>
+            <Form onSubmit={this.handleSubmit}>
+              <FormItem {...formItemLayout} label='First Name'>
+                {getFieldDecorator('firstName', {
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Please input your event name!',
+                      whitespace: true,
+                    },
+                  ],
+                })(<Input />)}
+              </FormItem>
+              <FormItem {...formItemLayout} label='Last Name'>
+                {getFieldDecorator('lastName', {
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Please input your event name!',
+                      whitespace: true,
+                    },
+                  ],
+                })(<Input />)}
+              </FormItem>
+              <FormItem {...formItemLayout} label='Organizer Name'>
+                {getFieldDecorator('organizerName', {
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Please input your event name!',
+                      whitespace: true,
+                    },
+                  ],
+                })(<Input />)}
+              </FormItem>
+              <FormItem {...formItemLayout} label='Add a Profile Image'>
+                <Upload
+                  {...getFieldDecorator('image', {
+                    rules: [{ required: true, message: 'Upload event image!' }],
+                  })}
+                  image={accountSettingsForm.image}
+                  saveImage={this.saveImage}
+                />{' '}
+              </FormItem>
+            </Form>
+          </ContentHolder>
+        </Box>
 
-        <Card
-          title="Home Address"
-          bodyStyle={{ padding: '1rem' }}
-          className="mb-4"
-        >
-          <Form onSubmit={this.handleSubmit}>
-            <FormItem {...formItemLayout} label="Address">
-              {getFieldDecorator('homeAddress', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Please input your event name!',
-                    whitespace: true,
-                  },
-                ],
-              })(<Input />)}
-            </FormItem>
-            <FormItem {...formItemLayout} label="Address 2">
-              {getFieldDecorator('homeAddress2', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Please input your event name!',
-                    whitespace: true,
-                  },
-                ],
-              })(<Input />)}
-            </FormItem>
-            <FormItem {...formItemLayout} label="City">
-              {getFieldDecorator('city', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Please input your event name!',
-                    whitespace: true,
-                  },
-                ],
-              })(<Input />)}
-            </FormItem>
-            <FormItem {...formItemLayout} label="Country">
-              {getFieldDecorator('country', {
-                rules: [
-                  {
-                    required: true,
-                    initialValue: 'USA',
-                    message: 'Please input your event name!',
-                    whitespace: true,
-                  },
-                ],
-              })(<Input />)}
-            </FormItem>
-            <FormItem {...formItemLayout} label="Zip/Postal Code">
-              {getFieldDecorator('zipCode', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Please input your event name!',
-                    whitespace: true,
-                  },
-                ],
-              })(<Input />)}
-            </FormItem>
-            <FormItem {...formItemLayout} label="State">
-              {getFieldDecorator('state', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Please input your event name!',
-                    whitespace: true,
-                  },
-                ],
-              })(
-                <Select defaultValue="Select a State">
-                  <Option value="Select a State">Select a State</Option>
-                  <Option value="AL">Alabama</Option>
-                  <Option value="AK">Alaska</Option>
-                  <Option value="AZ">Arizona</Option>
-                  <Option value="AR">Arkansas</Option>
-                  <Option value="CA">California</Option>
-                  <Option value="CO">Colorado</Option>
-                  <Option value="CT">Connecticut</Option>
-                  <Option value="DE">Delaware</Option>
-                  <Option value="DC">District Of Columbia</Option>
-                  <Option value="FL">Florida</Option>
-                  <Option value="GA">Georgia</Option>
-                  <Option value="HI">Hawaii</Option>
-                  <Option value="ID">Idaho</Option>
-                  <Option value="IL">Illinois</Option>
-                  <Option value="IN">Indiana</Option>
-                  <Option value="IA">Iowa</Option>
-                  <Option value="KS">Kansas</Option>
-                  <Option value="KY">Kentucky</Option>
-                  <Option value="LA">Louisiana</Option>
-                  <Option value="ME">Maine</Option>
-                  <Option value="MD">Maryland</Option>
-                  <Option value="MA">Massachusetts</Option>
-                  <Option value="MI">Michigan</Option>
-                  <Option value="MN">Minnesota</Option>
-                  <Option value="MS">Mississippi</Option>
-                  <Option value="MO">Missouri</Option>
-                  <Option value="MT">Montana</Option>
-                  <Option value="NE">Nebraska</Option>
-                  <Option value="NV">Nevada</Option>
-                  <Option value="NH">New Hampshire</Option>
-                  <Option value="NJ">New Jersey</Option>
-                  <Option value="NM">New Mexico</Option>
-                  <Option value="NY">New York</Option>
-                  <Option value="NC">North Carolina</Option>
-                  <Option value="ND">North Dakota</Option>
-                  <Option value="OH">Ohio</Option>
-                  <Option value="OK">Oklahoma</Option>
-                  <Option value="OR">Oregon</Option>
-                  <Option value="PA">Pennsylvania</Option>
-                  <Option value="RI">Rhode Island</Option>
-                  <Option value="SC">South Carolina</Option>
-                  <Option value="SD">South Dakota</Option>
-                  <Option value="TN">Tennessee</Option>
-                  <Option value="TX">Texas</Option>
-                  <Option value="UT">Utah</Option>
-                  <Option value="VT">Vermont</Option>
-                  <Option value="VA">Virginia</Option>
-                  <Option value="WA">Washington</Option>
-                  <Option value="WV">West Virginia</Option>
-                  <Option value="WI">Wisconsin</Option>
-                  <Option value="WY">Wyoming</Option>
-                </Select>,
-              )}
-            </FormItem>
-          </Form>
-        </Card>
-        <Button onClick={this.handleSubmit} type="primary" htmlType="submit">
+        <Box title={'Home Address'} subtitle={'yoo'}>
+          <ContentHolder>
+            <Form onSubmit={this.handleSubmit}>
+              <FormItem {...formItemLayout} label='Address'>
+                {getFieldDecorator('homeAddress', {
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Please input your event name!',
+                      whitespace: true,
+                    },
+                  ],
+                })(<Input />)}
+              </FormItem>
+              <FormItem {...formItemLayout} label='Address 2'>
+                {getFieldDecorator('homeAddress2', {
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Please input your event name!',
+                      whitespace: true,
+                    },
+                  ],
+                })(<Input />)}
+              </FormItem>
+              <FormItem {...formItemLayout} label='City'>
+                {getFieldDecorator('city', {
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Please input your event name!',
+                      whitespace: true,
+                    },
+                  ],
+                })(<Input />)}
+              </FormItem>
+              <FormItem {...formItemLayout} label='Country'>
+                {getFieldDecorator('country', {
+                  rules: [
+                    {
+                      required: true,
+                      initialValue: 'USA',
+                      message: 'Please input your event name!',
+                      whitespace: true,
+                    },
+                  ],
+                })(<Input />)}
+              </FormItem>
+              <FormItem {...formItemLayout} label='Zip/Postal Code'>
+                {getFieldDecorator('zipCode', {
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Please input your event name!',
+                      whitespace: true,
+                    },
+                  ],
+                })(<Input />)}
+              </FormItem>
+              <FormItem {...formItemLayout} label='State'>
+                {getFieldDecorator('state', {
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Please input your event name!',
+                      whitespace: true,
+                    },
+                  ],
+                })(
+                  <Select defaultValue='Select a State'>
+                    <Option value='Select a State'>Select a State</Option>
+                    <Option value='AL'>Alabama</Option>
+                    <Option value='AK'>Alaska</Option>
+                    <Option value='AZ'>Arizona</Option>
+                    <Option value='AR'>Arkansas</Option>
+                    <Option value='CA'>California</Option>
+                    <Option value='CO'>Colorado</Option>
+                    <Option value='CT'>Connecticut</Option>
+                    <Option value='DE'>Delaware</Option>
+                    <Option value='DC'>District Of Columbia</Option>
+                    <Option value='FL'>Florida</Option>
+                    <Option value='GA'>Georgia</Option>
+                    <Option value='HI'>Hawaii</Option>
+                    <Option value='ID'>Idaho</Option>
+                    <Option value='IL'>Illinois</Option>
+                    <Option value='IN'>Indiana</Option>
+                    <Option value='IA'>Iowa</Option>
+                    <Option value='KS'>Kansas</Option>
+                    <Option value='KY'>Kentucky</Option>
+                    <Option value='LA'>Louisiana</Option>
+                    <Option value='ME'>Maine</Option>
+                    <Option value='MD'>Maryland</Option>
+                    <Option value='MA'>Massachusetts</Option>
+                    <Option value='MI'>Michigan</Option>
+                    <Option value='MN'>Minnesota</Option>
+                    <Option value='MS'>Mississippi</Option>
+                    <Option value='MO'>Missouri</Option>
+                    <Option value='MT'>Montana</Option>
+                    <Option value='NE'>Nebraska</Option>
+                    <Option value='NV'>Nevada</Option>
+                    <Option value='NH'>New Hampshire</Option>
+                    <Option value='NJ'>New Jersey</Option>
+                    <Option value='NM'>New Mexico</Option>
+                    <Option value='NY'>New York</Option>
+                    <Option value='NC'>North Carolina</Option>
+                    <Option value='ND'>North Dakota</Option>
+                    <Option value='OH'>Ohio</Option>
+                    <Option value='OK'>Oklahoma</Option>
+                    <Option value='OR'>Oregon</Option>
+                    <Option value='PA'>Pennsylvania</Option>
+                    <Option value='RI'>Rhode Island</Option>
+                    <Option value='SC'>South Carolina</Option>
+                    <Option value='SD'>South Dakota</Option>
+                    <Option value='TN'>Tennessee</Option>
+                    <Option value='TX'>Texas</Option>
+                    <Option value='UT'>Utah</Option>
+                    <Option value='VT'>Vermont</Option>
+                    <Option value='VA'>Virginia</Option>
+                    <Option value='WA'>Washington</Option>
+                    <Option value='WV'>West Virginia</Option>
+                    <Option value='WI'>Wisconsin</Option>
+                    <Option value='WY'>Wyoming</Option>
+                  </Select>,
+                )}
+              </FormItem>
+            </Form>
+          </ContentHolder>
+        </Box>
+        <Button onClick={this.handleSubmit} type='primary' htmlType='submit'>
           Update
         </Button>
       </>

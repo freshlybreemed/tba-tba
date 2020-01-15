@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import actions from '../../redux/create/actions';
 import { Icon } from 'antd';
+import axios from 'axios';
 
 const FormItem = Form.Item;
 const { saveField } = actions;
@@ -200,6 +201,8 @@ class Create extends Component {
     } = this.props.form;
     const { createdEventForm, createdEvent } = this.props;
     const { location, description } = createdEventForm;
+    const submitButton =
+      typeof createdEvent === 'undefined' ? 'Create' : 'Update';
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -246,7 +249,7 @@ class Create extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
-        <FormItem {...formItemLayout} label="Event Title">
+        <FormItem {...formItemLayout} label='Event Title'>
           <Input
             {...getFieldProps('title', {
               getValueFromEvent: e => {
@@ -262,7 +265,7 @@ class Create extends Component {
             })}
           />
         </FormItem>
-        <FormItem {...formItemLayout} label="Location">
+        <FormItem {...formItemLayout} label='Location'>
           {this.state.ready ? (
             <PlacesAutocomplete
               value={
@@ -286,7 +289,7 @@ class Create extends Component {
                       id: 'text-input',
                     })}
                   />
-                  <div className="autocomplete-dropdown-container">
+                  <div className='autocomplete-dropdown-container'>
                     {loading && <div>Loading...</div>}
                     {suggestions.map(suggestion => {
                       const className = suggestion.active
@@ -320,7 +323,7 @@ class Create extends Component {
         </FormItem>
         <Form.Item
           {...formItemLayout}
-          label="Start Time"
+          label='Start Time'
           style={{ marginBottom: 0 }}
         >
           <Form.Item
@@ -380,14 +383,14 @@ class Create extends Component {
               allowClear={false}
               use12Hours
               defaultOpenValue={moment('12:00 AM', 'h:mm A')}
-              format="h:mm a"
+              format='h:mm a'
             />
           </FormItem>
         </Form.Item>
         <FormItem
           {...formItemLayout}
           style={{ marginBottom: 0 }}
-          label="End Time"
+          label='End Time'
         >
           <Form.Item
             style={{ display: 'inline-block', width: 'calc(50% - 12px)' }}
@@ -463,15 +466,15 @@ class Create extends Component {
               allowClear={false}
               use12Hours
               defaultOpenValue={moment('12:00 AM', 'h:mm A')}
-              format="h:mm a"
+              format='h:mm a'
             />
           </FormItem>
         </FormItem>
         {ReactQuill ? (
-          <FormItem {...formItemLayout} label="Event Description">
+          <FormItem {...formItemLayout} label='Event Description'>
             <ReactQuill
               value={description.value}
-              name="description"
+              name='description'
               onChange={this.handleChange}
             />
           </FormItem>
@@ -483,8 +486,8 @@ class Create extends Component {
           label={
             <span>
               Event Organizer&nbsp;
-              <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
+              <Tooltip title='What do you want others to call you?'>
+                <Icon type='question-circle-o' />
               </Tooltip>
             </span>
           }
@@ -505,15 +508,15 @@ class Create extends Component {
           label={
             <span>
               Tickets Types &nbsp;
-              <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
+              <Tooltip title='What do you want others to call you?'>
+                <Icon type='question-circle-o' />
               </Tooltip>
             </span>
           }
         >
           <TicketCreation />
         </FormItem>
-        <FormItem {...formItemLayout} label="Refundable?">
+        <FormItem {...formItemLayout} label='Refundable?'>
           {getFieldDecorator('refundable', {
             getValueFromEvent: e => {
               if (e) return true;
@@ -521,7 +524,7 @@ class Create extends Component {
             },
           })(<Switch />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="Publish?">
+        <FormItem {...formItemLayout} label='Publish?'>
           {getFieldDecorator('eventStatus', {
             getValueFromEvent: e => {
               if (e) return 'live';
@@ -531,7 +534,7 @@ class Create extends Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Event URL"
+          label='Event URL'
           validateStatus={getFieldError('slug') ? 'error' : ''}
           help={
             getFieldError('slug')
@@ -552,14 +555,14 @@ class Create extends Component {
                 <Input
                   style={{ marginBottom: 16 }}
                   addonBefore={`whatstba.com/e/`}
-                  addonAfter=".com"
+                  addonAfter='.com'
                 />
                 ,
               </div>
             </>,
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="Upload Event Image">
+        <FormItem {...formItemLayout} label='Upload Event Image'>
           <Upload
             {...getFieldProps('image', {
               rules: [{ required: true, message: 'Upload event image!' }],
@@ -574,15 +577,15 @@ class Create extends Component {
           })(
             <Checkbox>
               I have read the{' '}
-              <Link href="">
-                <a href="">agreement</a>
+              <Link href=''>
+                <a href=''>agreement</a>
               </Link>
             </Checkbox>,
           )}
         </FormItem>
         <FormItem {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">
-            {/* {createdEvent._id ? 'Update' : 'Register'} */}
+          <Button type='primary' htmlType='submit'>
+            {submitButton}
           </Button>
         </FormItem>
       </Form>
@@ -593,6 +596,7 @@ class Create extends Component {
 const mapStateToProps = state => {
   return {
     ...state.Create.toJS(),
+    organizerId: state.Auth.toJS().idToken ? state.Auth.toJS().idToken.id : '',
   };
 };
 

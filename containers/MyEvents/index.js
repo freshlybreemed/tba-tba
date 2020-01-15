@@ -8,7 +8,8 @@ import TableWrapper from '../Tables/antTables/antTable.style';
 import LayoutContentWrapper from '../../components/utility/layoutWrapper';
 import actions from '../../redux/events/actions';
 import { getCookie } from '../../helpers/session';
-
+import ContentHolder from '../../components/utility/contentHolder';
+import Box from '../../components/utility/box';
 import {
   Avatar,
   Badge,
@@ -31,8 +32,8 @@ const { Text } = Typography;
 const { fetchEvents } = actions;
 const customizeRenderEmpty = () => (
   <>
-    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Events">
-      <Button href="/create" type="primary">
+    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description='No Events'>
+      <Button href='/create' type='primary'>
         Create Event
       </Button>
     </Empty>
@@ -41,7 +42,7 @@ const customizeRenderEmpty = () => (
 
 const customizeRenderLoading = () => (
   <>
-    <Spin size="large" />
+    <Spin size='large' />
   </>
 );
 
@@ -112,10 +113,10 @@ class MyEvents extends Component {
                   <Link href={`/e/${event.slug}`}>
                     <a href={`/e/${event.slug}`}>
                       <Avatar
-                        shape="square"
+                        shape='square'
                         size={64}
                         src={event.image}
-                        icon="user"
+                        icon='user'
                       />
                     </a>
                   </Link>
@@ -147,8 +148,8 @@ class MyEvents extends Component {
           const data = getPercentage(event);
           return (
             <>
-              <Text type="secondary">{`${data.sold}/${data.total}`}</Text>
-              <Progress percent={data.percent} size="small" status="active" />
+              <Text type='secondary'>{`${data.sold}/${data.total}`}</Text>
+              <Progress percent={data.percent} size='small' status='active' />
             </>
           );
         },
@@ -169,14 +170,14 @@ class MyEvents extends Component {
             new Date(event.endDate).getTime() > new Date().getTime() &&
             event.eventStatus !== 'draft'
           )
-            status = <Badge status="success" text="Live" />;
+            status = <Badge status='success' text='Live' />;
           if (event.eventStatus === 'draft')
-            status = <Badge status="processing" text="Draft" />;
+            status = <Badge status='processing' text='Draft' />;
           if (
             new Date(event.endDate).getTime() < new Date().getTime() &&
             event.eventStatus !== 'draft'
           )
-            status = <Badge status="default" text="Sale Ended" />;
+            status = <Badge status='default' text='Sale Ended' />;
           return <>{status}</>;
         },
       },
@@ -197,15 +198,15 @@ class MyEvents extends Component {
                   <a href={`/manage/${event._id}`}>Manage</a>
                 </Link>
               </Menu.Item>
-              <Menu.Item key="3">
+              <Menu.Item key='3'>
                 <Link href={`/edit/${event._id}`}>
                   <a href={`/edit/${event._id}`}>Edit</a>
                 </Link>
               </Menu.Item>
               {event.eventStatus === 'draft' || !event.tickets ? (
-                <Menu.Item key="4">
+                <Menu.Item key='4'>
                   <Popconfirm
-                    title="Are you sure delete this event?"
+                    title='Are you sure delete this event?'
                     onConfirm={() => {
                       console.log({
                         data: event,
@@ -227,10 +228,10 @@ class MyEvents extends Component {
                       console.log(e);
                       message.error('Click on No');
                     }}
-                    okText="Yes"
-                    cancelText="No"
+                    okText='Yes'
+                    cancelText='No'
                   >
-                    <a href="#">Delete</a>
+                    <a href='#'>Delete</a>
                   </Popconfirm>
                 </Menu.Item>
               ) : (
@@ -242,7 +243,7 @@ class MyEvents extends Component {
             <span>
               <Dropdown overlay={menu}>
                 <Button>
-                  Actions <Icon type="down" />
+                  Actions <Icon type='down' />
                 </Button>
               </Dropdown>
             </span>
@@ -274,15 +275,15 @@ class MyEvents extends Component {
           <>
             {new Date(event.startDate).getTime() > new Date().getTime() &&
               event.eventStatus !== 'draft' && (
-                <Badge status="success" text="Live" />
+                <Badge status='success' text='Live' />
               )}
 
             {event.eventStatus === 'draft' && (
-              <Badge status="processing" text="Draft" />
+              <Badge status='processing' text='Draft' />
             )}
             {new Date(event.startDate).getTime() < new Date().getTime() &&
               event.eventStatus !== 'draft' && (
-                <Badge status="default" text="Sale Ended" />
+                <Badge status='default' text='Sale Ended' />
               )}
           </>
         ),
@@ -304,15 +305,15 @@ class MyEvents extends Component {
                   <a href={`/manage/${event._id}`}>Manage</a>
                 </Link>
               </Menu.Item>
-              <Menu.Item key="3">
+              <Menu.Item key='3'>
                 <Link href={`/edit/${event._id}`}>
                   <a href={`/edit/${event._id}`}>Edit</a>
                 </Link>
               </Menu.Item>
-              <Menu.Item key="4">
+              <Menu.Item key='4'>
                 {' '}
                 <Popconfirm
-                  title="Are you sure delete this event?"
+                  title='Are you sure delete this event?'
                   onConfirm={() => {
                     console.log({
                       data: event,
@@ -334,10 +335,10 @@ class MyEvents extends Component {
                     console.log(e);
                     message.error('Click on No');
                   }}
-                  okText="Yes"
-                  cancelText="No"
+                  okText='Yes'
+                  cancelText='No'
                 >
-                  <a href="#">Delete</a>
+                  <a href='#'>Delete</a>
                 </Popconfirm>
               </Menu.Item>
             </Menu>
@@ -346,7 +347,7 @@ class MyEvents extends Component {
             <span>
               <Dropdown overlay={menu}>
                 <Button>
-                  Actions <Icon type="down" />
+                  Actions <Icon type='down' />
                 </Button>
               </Dropdown>
             </span>
@@ -366,17 +367,25 @@ class MyEvents extends Component {
           }
         > */}
         <br />
-        <ConfigProvider
-          renderEmpty={!loading ? customizeRenderEmpty : customizeRenderLoading}
+        <Box
+          title={`My Events`}
+          // subtitle={<IntlMessages id='forms.input.basicSubTitle' />}
         >
-          <TableWrapper
-            size="small"
-            {...{ pagination: false }}
-            dataSource={events}
-            columns={isMobile ? mobileColumns : desktopColumns}
-          />
-        </ConfigProvider>
-        {/* </Card> */}
+          <ContentHolder>
+            <ConfigProvider
+              renderEmpty={
+                !loading ? customizeRenderEmpty : customizeRenderLoading
+              }
+            >
+              <TableWrapper
+                size='small'
+                {...{ pagination: false }}
+                dataSource={events}
+                columns={isMobile ? mobileColumns : desktopColumns}
+              />
+            </ConfigProvider>
+          </ContentHolder>
+        </Box>
       </>
     );
   }

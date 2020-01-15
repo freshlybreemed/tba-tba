@@ -42,6 +42,7 @@ const initState = new Map({
     organizer: {
       value: '',
     },
+    organizerId: {},
     // refundable: true,
     // tags: '',
     ticketTypes: {},

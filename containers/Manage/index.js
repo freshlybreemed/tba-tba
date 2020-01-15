@@ -261,7 +261,7 @@ const ordersMobileColumns = [
           <Menu.Item key={`/manage/${event._id}`}>
             <Link href={`/manage/${event._id}`}>Invalidate</Link>
           </Menu.Item>
-          <Menu.Item key="3">
+          <Menu.Item key='3'>
             <Link href={`/create`}>Refund</Link>
           </Menu.Item>
         </Menu>
@@ -270,7 +270,7 @@ const ordersMobileColumns = [
         <span>
           <Dropdown overlay={menu}>
             <Button>
-              Edit <Icon type="down" />
+              Edit <Icon type='down' />
             </Button>
           </Dropdown>
         </span>
@@ -308,30 +308,30 @@ const Legend = styled.div`
 const menu = (
   <Menu>
     <Menu.Item>
-      <Row type="flex" align="middle">
-        <Archive size={16} strokeWidth={1} className="mr-3" />{' '}
+      <Row type='flex' align='middle'>
+        <Archive size={16} strokeWidth={1} className='mr-3' />{' '}
         <span>Archive</span>
       </Row>
     </Menu.Item>
     <Menu.Item>
-      <Row type="flex" align="middle">
-        <Edit size={16} strokeWidth={1} className="mr-3" /> <span>Edit</span>
+      <Row type='flex' align='middle'>
+        <Edit size={16} strokeWidth={1} className='mr-3' /> <span>Edit</span>
       </Row>
     </Menu.Item>
     <Menu.Item>
-      <Row type="flex" align="middle">
-        <Trash size={16} strokeWidth={1} className="mr-3" /> <span>Delete</span>
+      <Row type='flex' align='middle'>
+        <Trash size={16} strokeWidth={1} className='mr-3' /> <span>Delete</span>
       </Row>
     </Menu.Item>
     <Menu.Divider />
     <Menu.Item>
-      <Row type="flex" align="middle">
-        <Save size={16} strokeWidth={1} className="mr-3" /> <span>Save as</span>
+      <Row type='flex' align='middle'>
+        <Save size={16} strokeWidth={1} className='mr-3' /> <span>Save as</span>
       </Row>
     </Menu.Item>
     <Menu.Item>
-      <Row type="flex" align="middle">
-        <Printer size={16} strokeWidth={1} className="mr-3" />{' '}
+      <Row type='flex' align='middle'>
+        <Printer size={16} strokeWidth={1} className='mr-3' />{' '}
         <span>Print</span>
       </Row>
     </Menu.Item>
@@ -340,7 +340,7 @@ const menu = (
 
 const TimelinePeriod = ({ content }) => (
   <small
-    className="text-muted"
+    className='text-muted'
     css={`
       display: block;
     `}
@@ -433,16 +433,16 @@ class Manage extends Component {
           .split('.')[0],
       );
       return (
-        <>
+        <div style={gridStyle}>
           <Text strong>{ticketTypes[type].name}</Text>
           <br />
-          <Progress type="circle" percent={percentage} width={80} />
+          <Progress type='circle' percent={percentage} width={80} />
           <br />
           <Text>
             {`${ticketTypes[type].currentQuantity}/${ticketTypes[type].startingQuantity}`}{' '}
             available
           </Text>
-        </>
+        </div>
       );
     });
   };
@@ -562,19 +562,19 @@ class Manage extends Component {
       <>
         <Title level={3}>{event.title}</Title>
         <a href={`/e/${event.slug}`}>
-          <Eye size="20" color={`black`} />
+          <Eye size='20' color={`black`} />
         </a>
         <Paragraph copyable>{`/e/${event.slug}`}</Paragraph>
-        <Row style={rowStyle} gutter={0} justify="start">
+        <Row style={rowStyle} gutter={0} justify='start'>
           <Col md={6} sm={12} xs={24} style={colStyle}>
             <IsoWidgetsWrapper>
               {/* Sticker Widget */}
               <StickerWidget
                 number={this.state.totalTicketCount.toString()}
                 text={`Tixs Sold`}
-                icon="ion-android-camera"
-                fontColor="#ffffff"
-                bgColor="#42A5F6"
+                icon='ion-android-camera'
+                fontColor='#ffffff'
+                bgColor='#42A5F6'
               />
             </IsoWidgetsWrapper>
           </Col>
@@ -585,9 +585,9 @@ class Manage extends Component {
               <StickerWidget
                 number={`${formatPrice(this.state.totalBalance)}`}
                 text={`Balance`}
-                icon="ion-chatbubbles"
-                fontColor="#ffffff"
-                bgColor="#7ED320"
+                icon='ion-cash'
+                fontColor='#ffffff'
+                bgColor='#7ED320'
               />
             </IsoWidgetsWrapper>
           </Col>
@@ -604,9 +604,9 @@ class Manage extends Component {
                     : ' Ticket'
                 }`}
                 text={`24-Hour Sales`}
-                icon="ion-pricetag"
-                fontColor="#ffffff"
-                bgColor="#F75D81"
+                icon='ion-pricetag'
+                fontColor='#ffffff'
+                bgColor='#F75D81'
               />
             </IsoWidgetsWrapper>
           </Col>
@@ -616,16 +616,16 @@ class Manage extends Component {
               <StickerWidget
                 number={870}
                 text={`Pageviews`}
-                icon="ion-email-unread"
-                fontColor="#ffffff"
-                bgColor="#7266BA"
+                icon='ion-eye'
+                fontColor='#ffffff'
+                bgColor='#7266BA'
               />
             </IsoWidgetsWrapper>
           </Col>
         </Row>
         <Box
           title={`Recent Orders`}
-          subtitle={<IntlMessages id="forms.input.basicSubTitle" />}
+          subtitle={<IntlMessages id='forms.input.basicSubTitle' />}
         >
           <ContentHolder>
             <ConfigProvider renderEmpty={() => customizeRenderEmpty('Sales')}>
@@ -645,7 +645,7 @@ class Manage extends Component {
                 </Card> */}
         <Box
           title={`Sales by Ticket Type"`}
-          subtitle={<IntlMessages id="forms.input.basicSubTitle" />}
+          subtitle={<IntlMessages id='forms.input.basicSubTitle' />}
         >
           <ContentHolder>{this.renderTicketTypes()} </ContentHolder>
         </Box>
@@ -688,21 +688,21 @@ class Manage extends Component {
         </Card>
          */}
         <Row gutter={16}>
-          <Col sm={24} md={8} className="mb-4">
-            <Card title="Stats" bodyStyle={{ padding: 0 }}>
+          <Col sm={24} md={8} className='mb-4'>
+            <Card title='Stats' bodyStyle={{ padding: 0 }}>
               <Row
-                type="flex"
-                align="middle"
-                justify="center"
+                type='flex'
+                align='middle'
+                justify='center'
                 gutter={16}
-                className="py-4"
+                className='py-4'
               >
                 <Progress
-                  type="dashboard"
+                  type='dashboard'
                   percent={getPercentage(event)}
                   width={181}
                   format={percent => (
-                    <span className="text-center">
+                    <span className='text-center'>
                       <div
                         css={`
                           display: block;
@@ -713,14 +713,14 @@ class Manage extends Component {
                         <GitCommit size={20} strokeWidth={2} />
                       </div>
                       <div
-                        className="h5 mb-0"
+                        className='h5 mb-0'
                         css={`
                           display: block;
                         `}
                       >
                         {percent}
                       </div>
-                      <div className="h6">
+                      <div className='h6'>
                         <small>% tickets sold</small>
                       </div>
                     </span>
@@ -729,7 +729,7 @@ class Manage extends Component {
               </Row>
             </Card>
           </Col>
-          <Col sm={24} md={8} className="mb-4">
+          <Col sm={24} md={8} className='mb-4'>
             {/* <Card
               title="Tasks"
               extra={
@@ -779,9 +779,9 @@ class Manage extends Component {
             </Card>
            */}
           </Col>
-          <Col sm={24} md={8} className="mb-4">
+          <Col sm={24} md={8} className='mb-4'>
             <Card
-              title="Team Members"
+              title='Team Members'
               // extra={
               //   <Dropdown overlay={menu}>
               //     <MoreHorizontal
@@ -793,42 +793,42 @@ class Manage extends Component {
               // }
             >
               {/* <TeamMemberCreation /> */}
-              <Timeline className="mt-2">
+              <Timeline className='mt-2'>
                 <Timeline.Item
-                  dot={<Avatar size={24} src="/static/images/face1.jpg" />}
+                  dot={<Avatar size={24} src='/static/images/face1.jpg' />}
                 >
-                  <div className="ml-4 text-truncate">
-                    <TimelinePeriod content="9.45" />
+                  <div className='ml-4 text-truncate'>
+                    <TimelinePeriod content='9.45' />
                     <span>
                       <a>John Doe</a> launched a new application
                     </span>
                   </div>
                 </Timeline.Item>
                 <Timeline.Item
-                  dot={<Avatar size={24} src="/static/images/face2.jpg" />}
+                  dot={<Avatar size={24} src='/static/images/face2.jpg' />}
                 >
-                  <div className="ml-4 text-truncate">
-                    <TimelinePeriod content="11.20" />
+                  <div className='ml-4 text-truncate'>
+                    <TimelinePeriod content='11.20' />
                     <span>
                       <a>Paula Bean</a> Cleared calendar events
                     </span>
                   </div>
                 </Timeline.Item>
                 <Timeline.Item
-                  dot={<Avatar size={24} src="/static/images/face3.jpg" />}
+                  dot={<Avatar size={24} src='/static/images/face3.jpg' />}
                 >
-                  <div className="ml-4 text-truncate">
-                    <TimelinePeriod content="13.00" />
+                  <div className='ml-4 text-truncate'>
+                    <TimelinePeriod content='13.00' />
                     <span>
                       <a>Peter Hadji</a> Joined your mailing list
                     </span>
                   </div>
                 </Timeline.Item>
                 <Timeline.Item
-                  dot={<Avatar size={24} src="/static/images/face4.jpg" />}
+                  dot={<Avatar size={24} src='/static/images/face4.jpg' />}
                 >
-                  <div className="ml-4 text-truncate">
-                    <TimelinePeriod content="15.00" />
+                  <div className='ml-4 text-truncate'>
+                    <TimelinePeriod content='15.00' />
                     <span>
                       <a>Trevor Belmont</a> Created a new task list
                     </span>
